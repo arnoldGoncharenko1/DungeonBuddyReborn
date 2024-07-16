@@ -21,3 +21,9 @@ dependencyResolutionManagement {
 
 rootProject.name = "Dungeon Buddy Reborn"
 include(":app")
+include(":core")
+include(":core:common")
+include(":core:data")
+include(":core:domain")
+include(":core:network")
+include(":core:ui")
