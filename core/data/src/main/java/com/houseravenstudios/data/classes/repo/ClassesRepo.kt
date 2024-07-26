@@ -13,7 +13,7 @@ class ClassesRepo @Inject constructor(
     private val classesApiService: ClassesApiService,
     private val mapper: NetworkClassesToClassListMapper
 ) {
-    fun fetch(id: String): Flow<ApiResult<ClassList>> {
+    fun fetch(): Flow<ApiResult<ClassList>> {
         return flow<ApiResult<ClassList>> {
             val result = classesApiService.getClasses()
             emit(ApiResult.Success(data = mapper.map(result)))
