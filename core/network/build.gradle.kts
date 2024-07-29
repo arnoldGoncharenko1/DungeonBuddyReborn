@@ -1,9 +1,9 @@
 plugins {
-    alias(libs.plugins.android.library)
-    alias(libs.plugins.jetbrains.kotlin.android)
-    id("kotlin-kapt")
-    id("org.jetbrains.kotlin.plugin.serialization") version "1.9.20"
-    id("com.google.dagger.hilt.android")
+    alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.kotlinAndroid)
+    alias(libs.plugins.com.google.dagger.hilt.android)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -36,16 +36,13 @@ android {
 }
 
 dependencies {
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
-    implementation(libs.retrofit)
-    implementation(libs.kotlinx.serialization.json)
-    implementation(libs.converter.kotlinx.serialization)
-    implementation(libs.okhttp)
     implementation(libs.hilt.android)
-    kapt(libs.hilt.android.compiler)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+    ksp(libs.hilt.compiler)
+    implementation(libs.retrofit)
+    implementation(libs.kotlin.serialization.json)
+    implementation(libs.retrofit.kotlin.serialization)
+    implementation(libs.okhttp.logging)
+    testImplementation(libs.mock.webserver)
+    testImplementation(libs.coroutines.test)
+    testImplementation(libs.kotlin.test)
 }
