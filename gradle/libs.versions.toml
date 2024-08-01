@@ -19,6 +19,7 @@ mockk = "1.13.5"
 coil = "2.4.0"
 hiltNavigationCompose = "1.1.0"
 androidxNavigation = "2.7.5"
+uiTooling = "1.6.8"
 
 [libraries]
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
@@ -52,6 +53,7 @@ lifecycle-viewModelCompose = { group = "androidx.lifecycle", name = "lifecycle-v
 hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "androidxNavigation" }
 material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended" }
+androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling", version.ref = "uiTooling" }
 
 
 
