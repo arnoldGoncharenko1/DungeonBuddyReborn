@@ -20,7 +20,7 @@ fun PlayerStatCircle(
     modifier: Modifier = Modifier) {
     
     Box(modifier = Modifier.size(100.dp)) {
-        Canvas(modifier = Modifier.size(100.dp), onDraw = {
+        Canvas(modifier = Modifier.fillMaxSize(), onDraw = {
             drawCircle(color = statColor)
         })
         StatText(
