@@ -55,6 +55,7 @@ dependencies {
     implementation(project(":core:data"))
     implementation(project(":core:common"))
     implementation(project(":core:domain"))
+    implementation(project(":core:ui"))
     implementation(libs.coil.kt)
     implementation(libs.coil.kt.compose)
     implementation(libs.hilt.navigation.compose)
