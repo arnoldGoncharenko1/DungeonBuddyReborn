@@ -33,14 +33,14 @@ class CharacterSheetViewModel @Inject constructor(
 
     private fun handleCategoriesResult(result: ApiResult<ClassList>) {
         uiState = when (result) {
-            is ApiResult.Success -> UiState.Success(data = result.data)
+            is ApiResult.Success -> UiState.Success(data = result.data, tabIndex = 0)
             is ApiResult.Error -> UiState.Failed(message = result.throwable?.message.orEmpty())
         }
     }
 
     sealed interface UiState {
         data object Loading : UiState
-        data class Success(val data: ClassList) : UiState
+        data class Success(val data: ClassList, val tabIndex: Int) : UiState
         data class Failed(val message: String) : UiState
     }
 }

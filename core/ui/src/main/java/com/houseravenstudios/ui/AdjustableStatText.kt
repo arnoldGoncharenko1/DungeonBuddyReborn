@@ -16,7 +16,7 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 
-private const val STROKE_WIDTH = 2f
+const val STROKE_WIDTH = 2f
 
 @Composable
 fun AdjustableStatText(
@@ -25,11 +25,12 @@ fun AdjustableStatText(
     statMaxValue: Int? = null,
     extraInfo: String? = null,
     onAddClicked: () -> Unit,
-    onRemoveClicked: () -> Unit
+    onRemoveClicked: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.drawBehind {
+        modifier = modifier.drawBehind {
             drawRect(color = Color.Gray, style = Stroke(width = STROKE_WIDTH))
         }
     ) {
