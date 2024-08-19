@@ -1,34 +1,38 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package com.houseravenstudios.charactersheet
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.sizeIn
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -71,19 +75,27 @@ internal fun LoadingScreen() {
 
 @Composable
 internal fun SuccessScreen(state: Success) {
+    var tabIndex by rememberSaveable { mutableIntStateOf(0) }
     val tabs = listOf("Home", "Character", "Features", "Attacks", "Inventory")
 
-    Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.SpaceBetween) {
-        when (state.tabIndex) {
+    Column(modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.SpaceBetween) {
+        TopAppBar(
+            title = { Text(text = "Character")},
+            windowInsets = WindowInsets(
+                top = dimensionResource(id = R.dimen.window_insets),
+                bottom = dimensionResource(id = R.dimen.window_insets)
+        ))
+        when (tabIndex) {
             0 -> HomeScreen()
             1 -> CharacterScreen()
+            2 -> Features()
         }
-        TabRow(selectedTabIndex = state.tabIndex) {
+        TabRow(selectedTabIndex = 0) {
             tabs.forEachIndexed { index, title ->
                 Tab(text = { Text(text = title, fontSize = dimensionResource(id = R.dimen.font_size_tab).value.sp) },
-                    selected = state.tabIndex == index,
+                    selected = index == tabIndex,
                     onClick = {
-
+                        tabIndex = index
                     }
                 )
             }
@@ -93,15 +105,46 @@ internal fun SuccessScreen(state: Success) {
 
 @Composable
 internal fun HomeScreen() {
-    Row {
+    Column {
         Text(text = "it Worked!")
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+internal fun Features() {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .fillMaxWidth()
+    ) {
+        var profAndLanguageValue by rememberSaveable { mutableStateOf("") }
+        var featuresAndTraitsValue by rememberSaveable { mutableStateOf("") }
+
+        Text(text = "Proficiencies and Languages", fontSize = dimensionResource(id = R.dimen.font_size_features).value.sp)
+        TextField(
+            value = profAndLanguageValue,
+            onValueChange = { profAndLanguageValue = it },
+            label = { Text("Enter text") },
+            textStyle = TextStyle(color = Color.Black),
+            modifier = Modifier
+                .padding(20.dp)
+                .fillMaxWidth()
+        )
+        Text(text = "Features and Traits", fontSize = dimensionResource(id = R.dimen.font_size_features).value.sp)
+        TextField(
+            value = featuresAndTraitsValue,
+            onValueChange = { featuresAndTraitsValue = it },
+            label = { Text("Enter text") },
+            textStyle = TextStyle(color = Color.Black),
+            modifier = Modifier
+                .padding(20.dp)
+                .fillMaxWidth()
+        )
+    }
+}
+
 @Composable
 internal fun CharacterScreen() {
-    TopAppBar(title = { Text(text = "Character")})
     StrDexConStatRow()
     IntWisChaStatRow()
 
@@ -212,5 +255,5 @@ internal fun DeathSaveRow(title: String, rowCount: Int) {
 @Preview
 @Composable
 fun CharacterSheetScreenPreview() {
-    CharacterSheetScreen(state = Success(ClassList(0, emptyList()), 1))
+    CharacterSheetScreen(state = Success(ClassList(0, emptyList())))
 }

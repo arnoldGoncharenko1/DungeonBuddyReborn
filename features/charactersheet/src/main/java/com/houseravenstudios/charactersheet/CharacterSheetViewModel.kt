@@ -18,7 +18,7 @@ class CharacterSheetViewModel @Inject constructor(
     private val getClassListUseCase: GetClassListUseCase
 ) : ViewModel() {
     var uiState by mutableStateOf<UiState>(UiState.Loading)
-        private set
+       private set
 
     init {
         fetchClasses()
@@ -33,14 +33,16 @@ class CharacterSheetViewModel @Inject constructor(
 
     private fun handleCategoriesResult(result: ApiResult<ClassList>) {
         uiState = when (result) {
-            is ApiResult.Success -> UiState.Success(data = result.data, tabIndex = 0)
+            is ApiResult.Success -> UiState.Success(data = result.data)
             is ApiResult.Error -> UiState.Failed(message = result.throwable?.message.orEmpty())
         }
     }
 
+    //update the tab index.
+
     sealed interface UiState {
         data object Loading : UiState
-        data class Success(val data: ClassList, val tabIndex: Int) : UiState
+        data class Success(val data: ClassList) : UiState
         data class Failed(val message: String) : UiState
     }
 }
